@@ -1,6 +1,6 @@
 {
-  "name": "build-your-own-radar",
-  "version": "0.3.0",
+  "name": "technology-radar",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,10 +12,10 @@
     "examples": "npm run build && npm run examples:clean && npm run examples:copy",
     "publishExamples": "node ./scripts/publish-examples.js"
   },
-  "author": "ThoughtWorks",
+  "author": "jeffgrunewald",
   "repository": {
     "type": "git",
-    "url": "https://github.com/thoughtworks/build-your-own-radar"
+    "url": "https://github.com/jeffgrunewald/techradar"
   },
   "keywords": [
     "tech-radar"
@@ -44,6 +44,7 @@
     "chance": "^1.0.4",
     "d3": "^4.2.6",
     "d3-tip": "^0.7.1",
+    "json-loader": "latest",
     "lodash": "^4.16.2",
     "sanitize-html": "^1.13.0",
     "tabletop": "^1.4.3",

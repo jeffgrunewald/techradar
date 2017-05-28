@@ -382,7 +382,7 @@ const Radar = function (size, radar) {
     header.select('.radar-title')
       .append('div')
       .attr('class', 'radar-title__logo')
-      .html('<a href="https://www.thoughtworks.com"> <img src="images/logo.png" /> </a>');
+      .html('<a href="https://www.thoughtworks.com"> <img src="/images/attribution.png" /> </a>');
 
     return header;
   }
@@ -421,7 +421,7 @@ const Radar = function (size, radar) {
       .append('div')
       .attr('class', 'footer-content')
       .append('p')
-      .html('Based on <a href="https://github.com/thoughtworks/build-your-own-radar">ThoughtWorks Radar</a>.');
+      .html('Based on the Technology Radar application developed by <a href="https://www.thoughtworks.com">ThoughtWorks</a>.');
   }
 
   function mouseoverQuadrant(order) {

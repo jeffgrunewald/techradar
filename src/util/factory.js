@@ -22,20 +22,6 @@ require('whatwg-fetch')
 const GoogleSheet = function (sheetReference, sheetName) {
     var self = {};
 
-    self.buildFromJSONURL = function (url) {
-        fetch(url)
-            .then(function(response) {
-                return response.json()
-            }).then(function(data) {
-                self.renderRadar(data);        
-                console.log('parsed json', data)
-            }).catch(function(ex) {
-                self.displayErrorMessage(ex)
-                console.log('parsing failed', ex)
-            })
-        
-    }
-
     self.buildFromJSON = function (data) {
         self.renderRadar(data);        
     }
@@ -260,7 +246,7 @@ function set_document_title() {
 function plotLogo(content) {
     content.append('div')
         .attr('class', 'input-sheet__logo')
-        .html('<a href="https://www.thoughtworks.com"><img src="/images/tw-logo.png" / ></a>');
+        .html('<a href="https://www.thoughtworks.com"><img src="/images/company-logo.png" / ></a>');
 }
 
 function plotFooter(content) {
@@ -271,16 +257,12 @@ function plotFooter(content) {
         .attr('class', 'footer-content')
         .append('p')
         .html('Based on <a href="https://github.com/thoughtworks/build-your-own-radar">ThoughtWorks Radar</a>.');
-
-
-
 }
 
 function plotBanner(content, text) {
     content.append('div')
         .attr('class', 'input-sheet__banner')
         .html(text);
-
 }
 
 function plotForm(content) {

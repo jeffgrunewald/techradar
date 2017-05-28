@@ -3,7 +3,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const args = require('yargs').argv;
-const buildPath = path.join(__dirname, args.prod ? './docs' : './dist');
+const buildPath = path.join(__dirname, './dist');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -16,7 +16,7 @@ let entry = ['./src/site.js'];
 let devtool;
 
 if (isDev) {
-    entry.push('webpack-dev-server/client?http://0.0.0.0:8080');
+    entry.push('webpack-dev-server/client?http://0.0.0.0:80');
     devtool = 'source-map';
 }
 
@@ -49,7 +49,7 @@ module.exports = {
 
     output: {
         path: buildPath,
-        publicPath: '',
+        publicPath: '/',
         filename: '[name].[hash].js'
     },
 
@@ -58,8 +58,15 @@ module.exports = {
             { test: /\.json$/, loader: 'json'},
             { test: /\.js$/, exclude: /node_modules/, loader: 'babel'},
             { test: /\.scss$/, exclude: /node_modules/, loader: ExtractTextPlugin.extract('style', 'css?sourceMap!sass') },
-            { test: /\.(png|jpg|ico)$/, exclude: /node_modules/, loader: 'file-loader?name=images/[name].[ext]&context=./src/images' }
+            { test: /\.(png|jpg|ico)$/, exclude: /node_modules/, loader: 'file-loader?name=images/[name].[ext]&context=./src/images' },
         ]
+    },
+
+    node: {
+      console: 'empty',
+      fs: 'empty',
+      net: 'empty',
+      tls: 'empty'
     },
 
     quiet: false,
@@ -72,7 +79,7 @@ module.exports = {
     devServer: {
         contentBase: buildPath,
         host: '0.0.0.0',
-        port: 8080
+        port: 80,
+        disableHostCheck: true,
     }
 };
-
