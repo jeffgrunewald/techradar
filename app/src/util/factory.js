@@ -12,7 +12,6 @@ const Ring = require('../models/ring');
 const Blip = require('../models/blip');
 const GraphingRadar = require('../graphing/radar');
 const MalformedDataError = require('../exceptions/malformedDataError');
-const SheetNotFoundError = require('../exceptions/sheetNotFoundError');
 const ContentValidator = require('./contentValidator');
 const ExceptionMessages = require('./exceptionMessages');
 require('whatwg-fetch')
@@ -30,8 +29,6 @@ const CsvSheet = function (sheetReference) {
 
         if (exception instanceof MalformedDataError) {
             message = message.concat(exception.message);
-        } else if (exception instanceof SheetNotFoundError) {
-            message = exception.message;
         } else {
             console.error(exception);
         }
@@ -148,8 +145,6 @@ const CsvSheet = function (sheetReference) {
 
         set_document_title();
 
-        plotLogo(content);
-
         plotBanner(content);
         plotFooter(content);
 
@@ -173,12 +168,6 @@ const CsvInput = function () {
 
 function set_document_title() {
     document.title = "Tech Radar";
-}
-
-function plotLogo(content) {
-    content.append('div')
-        .attr('class', 'input-sheet__logo')
-        .html('<a href="https://www.thoughtworks.com"><img src="/images/company-logo.png" / ></a>');
 }
 
 function plotFooter(content) {
