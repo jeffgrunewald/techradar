@@ -85,56 +85,6 @@ const CsvSheet = function (sheetReference) {
             self.displayErrorMessage(exception);
         }
     }
-    self.build = function () {
-        createRadar();
-
-        function createRadar(__, tabletop) {
-
-            try {
-                var columnNames = tabletop.sheets(sheetName).columnNames;
-
-                var contentValidator = new ContentValidator(columnNames);
-                contentValidator.verifyContent();
-                contentValidator.verifyHeaders();
-
-                var all = tabletop.sheets(sheetName).all();
-                var blips = _.map(all);
-
-                d3.selectAll(".loading").remove();
-
-                var rings = _.map(_.uniqBy(blips, 'ring'), 'ring');
-                var ringMap = {};
-                var maxRings = 4;
-
-                _.each(rings, function (ringName, i) {
-                    if (i == maxRings) {
-                        throw new MalformedDataError(ExceptionMessages.TOO_MANY_RINGS);
-                    }
-                    ringMap[ringName] = new Ring(ringName, i);
-                });
-
-                var quadrants = {};
-                _.each(blips, function (blip) {
-                    if (!quadrants[blip.quadrant]) {
-                        quadrants[blip.quadrant] = new Quadrant(_.capitalize(blip.quadrant));
-                    }
-                    quadrants[blip.quadrant].add(new Blip(blip.name, ringMap[blip.ring], blip.isNew.toLowerCase() === 'true', blip.topic, blip.description))
-                });
-
-                var radar = new Radar();
-                _.each(quadrants, function (quadrant) {
-                    radar.addQuadrant(quadrant)
-                });
-
-                var size = (window.innerHeight - 133) < 620 ? 620 : window.innerHeight - 133;
-
-                new GraphingRadar(size, radar).init().plot();
-
-            } catch (exception) {
-                self.displayErrorMessage(exception);
-            }
-        }
-    };
 
     self.init = function () {
         var content = d3.select('body')
