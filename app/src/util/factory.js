@@ -6,7 +6,6 @@ const _ = {
     capitalize: require('lodash/capitalize'),
     each: require('lodash/each')
 };
-const InputSanitizer = require('./inputSanitizer');
 const Radar = require('../models/radar');
 const Quadrant = require('../models/quadrant');
 const Ring = require('../models/ring');
@@ -52,7 +51,7 @@ const CsvSheet = function (sheetReference) {
 
     self.renderRadar = function (data) {
         try {
-            var blips = _.map(data, new InputSanitizer().sanitize);
+            var blips = _.map(data);
 
             document.title = "Tech Radar";
             d3.selectAll(".loading").remove();
@@ -102,7 +101,7 @@ const CsvSheet = function (sheetReference) {
                 contentValidator.verifyHeaders();
 
                 var all = tabletop.sheets(sheetName).all();
-                var blips = _.map(all, new InputSanitizer().sanitize);
+                var blips = _.map(all);
 
                 d3.selectAll(".loading").remove();
 
@@ -151,8 +150,7 @@ const CsvSheet = function (sheetReference) {
 
         plotLogo(content);
 
-        var bannerText = '<h1>Building your radar...</h1><p>Your Technology Radar will be available in just a few seconds</p>';
-        plotBanner(content, bannerText);
+        plotBanner(content);
         plotFooter(content);
 
 
