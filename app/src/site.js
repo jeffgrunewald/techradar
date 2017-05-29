@@ -5,6 +5,6 @@ require('./images/company-logo.png');
 require('./images/favicon.ico');
 require('./images/radar_legend.png');
 
-const GoogleSheetInput = require('./util/factory');
+const CsvInput = require('./util/factory');
 
-GoogleSheetInput().build();
+CsvInput().build();

@@ -19,7 +19,7 @@ const Sheet = require('./sheet');
 const ExceptionMessages = require('./exceptionMessages');
 require('whatwg-fetch')
 
-const GoogleSheet = function (sheetReference, sheetName) {
+const CsvSheet = function (sheetReference, sheetName) {
     var self = {};
 
     self.buildFromJSON = function (data) {
@@ -179,61 +179,12 @@ const GoogleSheet = function (sheetReference, sheetName) {
     return self;
 };
 
-var QueryParams = function (queryString) {
-    var decode = function (s) {
-        return decodeURIComponent(s.replace(/\+/g, " "));
-    };
-
-    var search = /([^&=]+)=?([^&]*)/g;
-
-    var queryParams = {};
-    var match;
-    while (match = search.exec(queryString))
-        queryParams[decode(match[1])] = decode(match[2]);
-
-    return queryParams
-};
-
-
-const GoogleSheetInput = function () {
+const CsvInput = function () {
     var self = {};
 
     self.build = function () {
-        var queryParams = QueryParams(window.location.search.substring(1));
-        if (queryParams.dataUrl) {
-            var sheet = GoogleSheet();
-            sheet.init().buildFromJSONURL(queryParams.dataUrl);
-        } else 
-        if (queryParams.sheetId) {
-            var sheet = GoogleSheet(queryParams.sheetId, queryParams.sheetName);
-            sheet.init().build();
-        } else 
-        if (window.LOCAL_DATA_URL) {
-            var sheet = GoogleSheet();
-            sheet.init().buildFromJSONURL(window.LOCAL_DATA_URL);
-        } else 
-        if (window.LOCAL_DATA) {
-            var sheet = GoogleSheet();
-            sheet.init().buildFromJSON(window.LOCAL_DATA);
-        } else 
-        {
-            var content = d3.select('body')
-                .append('div')
-                .attr('class', 'input-sheet');
-
-            set_document_title();
-
-            plotLogo(content);
-
-            var bannerText = '<h1>Build your own radar</h1><p>Once you\'ve <a href ="https://info.thoughtworks.com/visualize-your-tech-strategy.html">created your Radar</a>, you can use this service' +
-                ' to generate an <br />interactive version of your Technology Radar. Not sure how? <a href ="https://info.thoughtworks.com/visualize-your-tech-strategy-guide.html">Read this first.</a></p>';
-
-            plotBanner(content, bannerText);
-
-            plotForm(content);
-
-            plotFooter(content);
-        }
+        var sheet = CsvSheet();
+        sheet.init().buildFromJSON(window.LOCAL_DATA);
     };
 
     return self;
@@ -265,27 +216,4 @@ function plotBanner(content, text) {
         .html(text);
 }
 
-function plotForm(content) {
-    content.append('div')
-        .attr('class', 'input-sheet__form')
-        .append('p')
-        .html('<strong>Enter the URL of your <a href="https://info.thoughtworks.com/visualize-your-tech-strategy-guide.html#publish-byor-sheet" target="_blank">published</a> Google Sheet below…</strong>');
-
-    var form = content.select('.input-sheet__form').append('form')
-        .attr('method', 'get');
-
-    form.append('input')
-        .attr('type', 'text')
-        .attr('name', 'sheetId')
-        .attr('placeholder', 'e.g. https://docs.google.com/spreadsheets/d/1waDG0_W3-yNiAaUfxcZhTKvl7AUCgXwQw8mdPjCz86U/');
-
-    form.append('button')
-        .attr('type', 'submit')
-        .append('a')
-        .attr('class', 'button')
-        .text('Build my radar');
-
-    form.append('p').html("<a href='https://info.thoughtworks.com/visualize-your-tech-strategy-guide.html#faq'>Need help?</a>");
-}
-
-module.exports = GoogleSheetInput;
+module.exports = CsvInput;
