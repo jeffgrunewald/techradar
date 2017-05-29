@@ -6,7 +6,6 @@ const _ = {
     capitalize: require('lodash/capitalize'),
     each: require('lodash/each')
 };
-
 const InputSanitizer = require('./inputSanitizer');
 const Radar = require('../models/radar');
 const Quadrant = require('../models/quadrant');
@@ -19,6 +18,7 @@ const ContentValidator = require('./contentValidator');
 const Sheet = require('./sheet');
 const ExceptionMessages = require('./exceptionMessages');
 require('whatwg-fetch')
+
 const GoogleSheet = function (sheetReference, sheetName) {
     var self = {};
 
@@ -55,7 +55,7 @@ const GoogleSheet = function (sheetReference, sheetName) {
         try {
             var blips = _.map(data, new InputSanitizer().sanitize);
 
-            document.title = "Atlassian Tech Radar";
+            document.title = "Tech Radar";
             d3.selectAll(".loading").remove();
 
             var rings = _.map(_.uniqBy(blips, 'ring'), 'ring');
@@ -240,7 +240,7 @@ const GoogleSheetInput = function () {
 };
 
 function set_document_title() {
-    document.title = "Build your own Radar";
+    document.title = "Tech Radar";
 }
 
 function plotLogo(content) {
