@@ -15,11 +15,10 @@ const GraphingRadar = require('../graphing/radar');
 const MalformedDataError = require('../exceptions/malformedDataError');
 const SheetNotFoundError = require('../exceptions/sheetNotFoundError');
 const ContentValidator = require('./contentValidator');
-const Sheet = require('./sheet');
 const ExceptionMessages = require('./exceptionMessages');
 require('whatwg-fetch')
 
-const CsvSheet = function (sheetReference, sheetName) {
+const CsvSheet = function (sheetReference) {
     var self = {};
 
     self.buildFromJSON = function (data) {
@@ -91,26 +90,11 @@ const CsvSheet = function (sheetReference, sheetName) {
         }
     }
     self.build = function () {
-        var sheet = new Sheet(sheetReference);
-        sheet.exists(function(notFound) {
-            if (notFound) {
-                displayErrorMessage(notFound);
-                return;
-            }
-
-            Tabletop.init({
-                key: sheet.id,
-                callback: createRadar
-            });
-        });
+        createRadar();
 
         function createRadar(__, tabletop) {
 
             try {
-
-                if (!sheetName) {
-                    sheetName = tabletop.foundSheetNames[0];
-                }
                 var columnNames = tabletop.sheets(sheetName).columnNames;
 
                 var contentValidator = new ContentValidator(columnNames);
@@ -120,7 +104,6 @@ const CsvSheet = function (sheetReference, sheetName) {
                 var all = tabletop.sheets(sheetName).all();
                 var blips = _.map(all, new InputSanitizer().sanitize);
 
-                document.title = tabletop.googleSheetName;
                 d3.selectAll(".loading").remove();
 
                 var rings = _.map(_.uniqBy(blips, 'ring'), 'ring');
