@@ -1,7 +1,7 @@
 {
   "name": "technology-radar",
   "version": "0.1.0",
-  "description": "",
+  "description": "A tool for visualizing an organizational technology radar with totally private data",
   "main": "index.js",
   "scripts": {
     "test": "istanbul cover jasmine",
@@ -35,8 +35,7 @@
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.16.1",
-    "yargs": "^5.0.0"
+    "webpack-dev-server": "^1.16.1"
   },
   "dependencies": {
     "chance": "^1.0.4",
