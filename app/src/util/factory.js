@@ -1,5 +1,4 @@
 const d3 = require('d3');
-const Tabletop = require('tabletop');
 const _ = {
     map: require('lodash/map'),
     uniqBy: require('lodash/uniqBy'),
@@ -14,9 +13,8 @@ const GraphingRadar = require('../graphing/radar');
 const MalformedDataError = require('../exceptions/malformedDataError');
 const ContentValidator = require('./contentValidator');
 const ExceptionMessages = require('./exceptionMessages');
-require('whatwg-fetch')
 
-const CsvSheet = function (sheetReference) {
+const CsvSheet = function () {
     var self = {};
 
     self.buildFromJSON = function (data) {
