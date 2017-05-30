@@ -27,4 +27,4 @@ CMD ["npm", "run", "dev"]
 
 LABEL cache_date=${cache_date} \
       maintainer=jeff@grunewalddesign.com \
-      node_version=7.3.0
+      node_version=7.10.0
