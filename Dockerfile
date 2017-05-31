@@ -21,10 +21,10 @@ RUN cat radar_data.csv \
        -e 's/1adopt/adopt/g' \
        -e 's/2trial/trial/g' \
        -e 's/3assess/assess/g' \
-       -e 's/4hold/hold/g' > radar_parsed.csv
+       -e 's/4hold/hold/g' > radar_sorted.csv
 
 RUN npm install -g csvtojson@1.1.5 \
- && csvtojson radar_parsed.csv > radar_data.json \
+ && csvtojson radar_sorted.csv > radar_data.json \
  && sed -i -e '/PLACEHOLDER_VALUE/{r radar_data.json' -e 'd;}' app/src/index.html \
  && sed -i -e "s/Tech Radar/${doc_title}/g" app/src/util/factory.js \
  && sed -i -e "s/company-name/${company_url}/" app/src/graphing/radar.js
